@@ -1,3 +1,7 @@
+#========================
+# Nama : William Abie
+# NPM  : 5210411353
+#========================
 # Implementasi Overriding pada class ComputerPart
 
 class ComputerPart:
