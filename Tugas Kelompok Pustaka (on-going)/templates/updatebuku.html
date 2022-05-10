@@ -1,0 +1,113 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="mb-2">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">Pustaka</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Daftar
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/buku">Buku</a>
+                    <a class="dropdown-item" href="/majalah">Majalah</a>
+                    <a class="dropdown-item" href="/dvd">DVD</a>
+                  </div>
+                </li>
+              </ul>
+              <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Currently disabled" aria-label="Search" readonly>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </div>
+        </nav>
+    </div>
+    <div class="container bg-info text-white">
+        {% for row in update %}
+        <form action="/ubahbuku" method="POST" class="pb-2 pt-2">
+            <div class="form-group w-25">
+                <label>ID</label>
+                <input type="number" name="id" class="form-control" value="{{row[0]}}" readonly>
+            </div>
+            <div class="form-group w-25">
+                <label>Judul</label>
+                <input type="text" name="judul" class="form-control" value="{{row[1]}}" required readonly>
+            </div>
+            <div class="form-group mt-2 w-25">
+                <label>Lokasi</label>
+                <select name="lokasi" class="form-control">
+                    <option value="0" {{'selected' if row[2]=='0'}}>---Masukkan Lokasi Buku---</option>
+                    <option value="Rak I-I" {{'selected' if row[2]=='Rak I-I'}}>Rak I-I</option>
+                    <option value="Rak I-II" {{'selected' if row[2]=='Rak I-II'}}>Rak I-II</option>
+                    <option value="Rak I-III" {{'selected' if row[2]=='Rak I-III'}}>Rak I-III</option>
+                    <option value="Rak II-I" {{'selected' if row[2]=='Rak II-I'}}>Rak II-I</option>
+                    <option value="Rak II-II" {{'selected' if row[2]=='Rak II-II'}}>Rak II-II</option>
+                    <option value="Rak II-III" {{'selected' if row[2]=='Rak II-III'}}>Rak II-III</option>
+                    <option value="Rak III-I" {{'selected' if row[2]=='Rak III-I'}}>Rak III-I</option>
+                    <option value="Rak III-II" {{'selected' if row[2]=='Rak III-II'}}>Rak III-II</option>
+                    <option value="Rak III-III" {{'selected' if row[2]=='Rak III-III'}}>Rak III-III</option>
+                </select>
+            </div>
+            <div class="form-group w-25">
+                <label>Penulis</label>
+                <input type="text" name="penulis" class="form-control" value="{{row[3]}}" required>
+            </div>
+            <div class="form-group w-25">
+                <label>Tahun Terbit</label>
+                <input type="number" name="terbit" class="form-control" value="{{row[4]}}" required>
+            </div>
+            <label>Jenis Buku</label>
+            <div class="form-check">
+                <input type="radio" name="jenis" class="form-check-input" value="Autobiografi" {{'checked' if row[5]=='Autobiografi'}}>
+                <label class="form-check-label">Autobiografi</label>
+                <div class="form check">          
+                    <input type="radio" name="jenis" class="form-check-input" value="Biografi" {{'checked' if row[5]=='Biografi'}}>
+                    <label class="form-check-label">Biografi</label>
+                </div>
+                <div class="form check">          
+                    <input type="radio" name="jenis" class="form-check-input" value="Fiksi" {{'checked' if row[5]=='Fiksi'}}>
+                    <label class="form-check-label">Fiksi</label>
+                </div>
+                <div class="form check">          
+                    <input type="radio" name="jenis" class="form-check-input" value="Non-Fiksi" {{'checked' if row[5]=='Non-Fiksi'}}>
+                    <label class="form-check-label">Non-Fiksi</label>
+                </div>
+                <div class="form check">          
+                    <input type="radio" name="jenis" class="form-check-input" value="Novel" {{'checked' if row[5]=='Novel'}}>
+                    <label class="form-check-label">Novel</label>
+                </div>
+            </div>
+            <div class="form-group mt-2 w-25">
+                <label>Status</label>
+                <select name="status" class="form-control">
+                    <option value="0" {{'selected' if row[6]=='0'}}>---Status Buku---</option>
+                    <option value="Tidak tersedia" {{'selected' if row[6]=='Tidak tersedia'}}>Tidak tersedia</option>
+                    <option value="Tersedia" {{'selected' if row[6]=='Tersedia'}}>Tersedia</option>
+                </select>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" name="ubahBuku" value="Update" class="btn btn-primary">
+            </div>
+        </form>
+        {% endfor %}
+    </div>
+</body>
+</html>
